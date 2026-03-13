@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://btotov0p63beu"]
+
+[ext_resource type="Script" uid="uid://02d1dmdoycxb" path="res://Scripts/PlayerScript.gd" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://duj2bcq7dbv3u" path="res://Assets/Graphics/ChasmCharacter.png" id="2_kne1u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e80uo"]
+size = Vector2(11.5, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
+atlas = ExtResource("2_kne1u")
+region = Rect2(130, 0, 130, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gntrk"]
+atlas = ExtResource("2_kne1u")
+region = Rect2(0, 0, 130, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyqiw"]
+atlas = ExtResource("2_kne1u")
+region = Rect2(270, 150, 110, 110)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxr5p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dewec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gntrk")
+}],
+"loop": false,
+"name": &"BallToIdle",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dewec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqiw")
+}],
+"loop": false,
+"name": &"IdleToBall",
+"speed": 15.0
+}]
+
+[node name="CharacterController" type="CharacterBody2D"]
+script = ExtResource("1_kpjcp")
+IdleVelocity = 0.5
+DashPower = 200.0
+metadata/_custom_type_script = "uid://02d1dmdoycxb"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e80uo")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_cxr5p")
+animation = &"IdleToBall"
+autoplay = "IdleToBall"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
