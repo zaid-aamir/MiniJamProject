@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq3mff7sc6trv"]
+
+[ext_resource type="Script" uid="uid://mrtbn23ve14w" path="res://Assets/Scripts/CPU/DropArea.gd" id="1_i5xta"]
+[ext_resource type="Texture2D" uid="uid://c6350poku7vrx" path="res://Assets/Graphics/DashHeart.png" id="2_goprx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tnq6"]
+size = Vector2(180, 150)
+
+[node name="DropArea" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_i5xta")
+metadata/_custom_type_script = "uid://mrtbn23ve14w"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7tnq6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_goprx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
