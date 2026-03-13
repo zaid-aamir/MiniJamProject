@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv3bb815mvv6g"]
+
+[ext_resource type="Script" uid="uid://cx1qgyk0c74vl" path="res://Scripts/GameContoller.gd" id="1_mk1ro"]
+[ext_resource type="PackedScene" uid="uid://b3jwqi4e7w5v4" path="res://Scenes/Game.tscn" id="2_8bihv"]
+
+[node name="SceneManagerNode" type="Node"]
+script = ExtResource("1_mk1ro")
+metadata/_custom_type_script = "uid://cx1qgyk0c74vl"
+
+[node name="2D" type="Node" parent="."]
+
+[node name="Node2D" parent="2D" instance=ExtResource("2_8bihv")]
