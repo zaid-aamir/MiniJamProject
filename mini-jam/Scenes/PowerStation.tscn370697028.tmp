@@ -1,0 +1,154 @@
+[gd_scene load_steps=19 format=3 uid="uid://dt7vve71gfwl2"]
+
+[ext_resource type="Texture2D" uid="uid://bspmt3yth5h4n" path="res://Assets/Graphics/ChargeScreen.png" id="1_4jq7v"]
+[ext_resource type="Script" uid="uid://bhfusb7qysq3b" path="res://Assets/Scripts/CPU/PowerStation.gd" id="1_inqbi"]
+[ext_resource type="Texture2D" uid="uid://carptw8maiawa" path="res://Assets/Graphics/Switch.png" id="2_inqbi"]
+[ext_resource type="Texture2D" uid="uid://u8tg2ha1i3i1" path="res://Assets/Graphics/ScreenWasteBattery.png" id="3_2wvqs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk13y"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(1920, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2rae"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(0, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekcos"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(320, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohh7c"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(640, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fc7cm"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(960, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wp44f"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(1280, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7oat"]
+atlas = ExtResource("1_4jq7v")
+region = Rect2(1600, 0, 320, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th6lh"]
+atlas = ExtResource("3_2wvqs")
+region = Rect2(0, 0, 310, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2cx1"]
+atlas = ExtResource("3_2wvqs")
+region = Rect2(310, 0, 310, 230)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3bcxi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk13y")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2rae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekcos")
+}],
+"loop": true,
+"name": &"LowPower",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohh7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fc7cm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wp44f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7oat")
+}],
+"loop": true,
+"name": &"UsingPower",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_th6lh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2cx1")
+}],
+"loop": true,
+"name": &"WastingPower",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bcxi"]
+atlas = ExtResource("2_inqbi")
+region = Rect2(290, 0, 290, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajd7w"]
+atlas = ExtResource("2_inqbi")
+region = Rect2(0, 0, 290, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nfg7v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bcxi")
+}],
+"loop": false,
+"name": &"Off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajd7w")
+}],
+"loop": false,
+"name": &"On",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xk13y"]
+size = Vector2(300, 120)
+
+[node name="PowerStation" type="Node2D" node_paths=PackedStringArray("Switch", "SwitchSprite", "Screen")]
+script = ExtResource("1_inqbi")
+Switch = NodePath("Switch")
+SwitchSprite = NodePath("Switch/AnimatedSprite2D")
+Screen = NodePath("Screen")
+ResponseTime = 30.0
+MinTimeToWaitToNeedCharge = 15.0
+MaxTimeToWaitToNeedCharge = 20.0
+
+[node name="Screen" type="AnimatedSprite2D" parent="."]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_3bcxi")
+animation = &"WastingPower"
+autoplay = "UsingPower"
+frame_progress = 0.55510515
+
+[node name="Switch" type="Area2D" parent="."]
+position = Vector2(0, 200)
+collision_mask = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Switch"]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_nfg7v")
+animation = &"On"
+autoplay = "Off"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Switch"]
+shape = SubResource("RectangleShape2D_xk13y")
+
+[connection signal="body_entered" from="Switch" to="." method="_on_switch_body_entered"]
+[connection signal="body_exited" from="Switch" to="." method="_on_switch_body_exited"]
