@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcc3w8ulquvg8"]
+
+[ext_resource type="Texture2D" uid="uid://cbdqnr84kolop" path="res://Assets/Graphics/MiniJamBattery.png" id="2_deexs"]
+[ext_resource type="Script" uid="uid://bswiotis6j3tr" path="res://Assets/Scripts/CPU/BatteryScript.gd" id="2_wjmlx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxbyn"]
+atlas = ExtResource("2_deexs")
+region = Rect2(0, 0, 120, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjmlx"]
+atlas = ExtResource("2_deexs")
+region = Rect2(240, 0, 120, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deexs"]
+atlas = ExtResource("2_deexs")
+region = Rect2(120, 0, 120, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_20cnl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxbyn")
+}],
+"loop": true,
+"name": &"Full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjmlx")
+}],
+"loop": true,
+"name": &"One-Third",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deexs")
+}],
+"loop": true,
+"name": &"Two-Thirds",
+"speed": 5.0
+}]
+
+[node name="Battery" type="AnimatedSprite2D"]
+z_index = 4
+sprite_frames = SubResource("SpriteFrames_20cnl")
+animation = &"Two-Thirds"
+script = ExtResource("2_wjmlx")
+metadata/_custom_type_script = "uid://bswiotis6j3tr"
